@@ -5,8 +5,8 @@ Summary:                        META-package for configure system
 License:                        GPLv3
 
 Source10:                       sysctl.custom.conf
-Source11:                       run.backup.db.sh
-Source12:                       run.domain.install.sh
+Source11:                       run.backup.sh
+Source12:                       run.domain.sh
 
 %description
 META-package for configure system.
