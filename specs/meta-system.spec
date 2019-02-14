@@ -41,7 +41,17 @@ install -m 0755 %{SOURCE12} \
     %{buildroot}%{_libexecdir}/run.domain.sh
 
 %files
-%dir %{_sysconfdir}/nginx/vhosts.d
+%dir /home/storage/cache
+%dir /home/storage/databases
+%dir /home/storage/databases/.backup
+%dir /home/storage/databases/redis
+%dir /home/storage/databases/mysql
+%dir /home/storage/logs
+%dir /home/storage/projects
+%dir /home/storage/projects/.backup
+%dir /home/storage/sessions
+%dir /home/storage/tmp
+%dir /home/storage/users
 %config(noreplace) %{_sysconfdir}/sysctl.d/00-sysctl.custom.conf
 %{_libexecdir}/run.backup.sh
 %{_libexecdir}/run.domain.sh
