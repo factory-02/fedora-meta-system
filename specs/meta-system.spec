@@ -35,10 +35,12 @@ install -p -m 0644 %{SOURCE10} \
     %{buildroot}%{_sysconfdir}/sysctl.d/00-sysctl.custom.conf
 
 # Install scripts.
+mkdir -p %{buildroot}%{_prefix}/local/bin
+
 install -m 0755 %{SOURCE11} \
-    %{buildroot}%{_libexecdir}/run.backup.sh
+    %{buildroot}%{_prefix}/local/bin/run.backup.sh
 install -m 0755 %{SOURCE12} \
-    %{buildroot}%{_libexecdir}/run.domain.sh
+    %{buildroot}%{_prefix}/local/bin/run.domain.sh
 
 %files
 %dir /home/storage/cache
@@ -53,8 +55,8 @@ install -m 0755 %{SOURCE12} \
 %dir /home/storage/tmp
 %dir /home/storage/users
 %config(noreplace) %{_sysconfdir}/sysctl.d/00-sysctl.custom.conf
-%{_libexecdir}/run.backup.sh
-%{_libexecdir}/run.domain.sh
+%{_prefix}/local/bin/run.backup.sh
+%{_prefix}/local/bin/run.domain.sh
 
 %changelog
 * Tue Feb 12 2019 Kitsune Solar <kitsune.solar@gmail.com> - 1.0.1-1
