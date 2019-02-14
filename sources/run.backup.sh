@@ -7,23 +7,37 @@
 # @version 1.0.0
 # -------------------------------------------------------------------------------------------------------------------- #
 
-# -------------------------------------------------------------------------------------------------------------------- #
-# Timestamp generator.
-# -------------------------------------------------------------------------------------------------------------------- #
-
-run.timestamp() {
+ext.backup.get.timestamp() {
     timestamp="$( date -u '+%Y-%m-%d.%T' )"
 
-    echo ${timestamp}
+    echo "${timestamp}"
+}
+
+ext.backup.get.mysql() {
+    mysql="$( which mysql )"
+
+    echo "${mysql}"
+}
+
+ext.backup.get.mysql.dump() {
+    mysql_dump="$( which mysqldump )"
+
+    echo "${mysql_dump}"
 }
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # Backup databases.
 # -------------------------------------------------------------------------------------------------------------------- #
 
-db() {
-    # Timestamp.
-    timestamp="$( run.timestamp )"
+run.backup.db() {
+    # Get timestamp.
+    timestamp="$( ext.backup.get.timestamp )"
+
+    # Get mysql.
+    mysql="$( ext.backup.get.mysql )"
+
+    # Get mysqldump.
+    mysql_dump="$( ext.backup.get.mysql.dump )"
 
     # DB user.
     db_user="${1}"
@@ -40,12 +54,6 @@ db() {
     # Path.
     path="${5}/${timestamp}"
 
-    # Get mysql.
-    mysql="$( which mysql )"
-
-    # Get mysqldump.
-    mysql_dump="$( which mysqldump )"
-
     # Get databases.
     databases=`${mysql} -u "${db_user}" -p"${db_password}" -h"${db_host}" -e "show databases;" | egrep -v "^(mysql|information_schema|performance_schema)$"`
 
@@ -57,11 +65,12 @@ db() {
         echo ""
         echo "--- Backup database: ${database} - ["
 
-        ${mysql_dump}       \
-        -u "${db_user}"     \
-        -p"${db_password}"  \
-        -h"${db_host}"      \
-        --opt ${database} > "${database}.${timestamp}.sql" | gzip > "${database}.${timestamp}.sql.gz"
+        ${mysql_dump}                                       \
+        -u "${db_user}"                                     \
+        -p"${db_password}"                                  \
+        -h"${db_host}"                                      \
+        --opt ${database} > "${database}.${timestamp}.sql"  \
+        | gzip > "${database}.${timestamp}.sql.gz"
 
         echo "--- Backup database: ${database} - ]"
         echo ""

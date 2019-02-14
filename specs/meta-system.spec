@@ -16,16 +16,32 @@ META-package for configure system.
 # -------------------------------------------------------------------------------------------------------------------- #
 
 %install
+# Create directories.
+install -p -d -m 0755 %{buildroot}/home/storage/cache
+install -p -d -m 0755 %{buildroot}/home/storage/databases
+install -p -d -m 0755 %{buildroot}/home/storage/databases/.backup
+install -p -d -m 0755 %{buildroot}/home/storage/databases/redis
+install -p -d -m 0755 %{buildroot}/home/storage/databases/mysql
+install -p -d -m 0755 %{buildroot}/home/storage/logs
+install -p -d -m 0755 %{buildroot}/home/storage/projects
+install -p -d -m 0755 %{buildroot}/home/storage/projects/.backup
+install -p -d -m 0755 %{buildroot}/home/storage/sessions
+install -p -d -m 0755 %{buildroot}/home/storage/tmp
+install -p -d -m 0755 %{buildroot}/home/storage/users
+
+# Install configs.
 install -p -d -m 0755 %{buildroot}%{_sysconfdir}/sysctl.d
 install -p -m 0644 %{SOURCE10} \
     %{buildroot}%{_sysconfdir}/sysctl.d/00-sysctl.custom.conf
 
+# Install scripts.
 install -p -m 0755 %{SOURCE11} \
     %{buildroot}%{_prefix}/local/bin/run.backup.sh
 install -p -m 0755 %{SOURCE12} \
     %{buildroot}%{_prefix}/local/bin/run.domain.sh
 
 %files
+%dir %{_sysconfdir}/nginx/vhosts.d
 %config(noreplace) %{_sysconfdir}/sysctl.d/00-sysctl.custom.conf
 %{_prefix}/local/bin/run.backup.sh
 %{_prefix}/local/bin/run.domain.sh
