@@ -36,15 +36,15 @@ install -p -m 0644 %{SOURCE10} \
 
 # Install scripts.
 install -m 0755 %{SOURCE11} \
-    %{buildroot}%{_libexecdir}/sysctl.d/run.backup.sh
+    %{buildroot}%{_libexecdir}/run.backup.sh
 install -m 0755 %{SOURCE12} \
-    %{buildroot}%{_libexecdir}/sysctl.d/run.domain.sh
+    %{buildroot}%{_libexecdir}/run.domain.sh
 
 %files
 %dir %{_sysconfdir}/nginx/vhosts.d
 %config(noreplace) %{_sysconfdir}/sysctl.d/00-sysctl.custom.conf
-%{_libexecdir}/sysctl.d/run.backup.sh
-%{_libexecdir}/sysctl.d/run.domain.sh
+%{_libexecdir}/run.backup.sh
+%{_libexecdir}/run.domain.sh
 
 %changelog
 * Tue Feb 12 2019 Kitsune Solar <kitsune.solar@gmail.com> - 1.0.1-1
